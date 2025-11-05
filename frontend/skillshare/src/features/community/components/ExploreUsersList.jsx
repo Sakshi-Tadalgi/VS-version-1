@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 export default function ExploreUsersList() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.community.users);
+  const loggedInUser = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     dispatch(exploreUsers());
@@ -14,9 +15,11 @@ export default function ExploreUsersList() {
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+      {users
+        .filter((user) => user.id !== loggedInUser?.id) // ✅ exclude logged-in user
+        .map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
     </Box>
   );
 }

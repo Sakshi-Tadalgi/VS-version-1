@@ -12,6 +12,10 @@ import FeedbackPage from "../pages/FeedbackPage";
 import CommunityPage from "../pages/CommunityPage";
 import NotificationPage from "../pages/NotificationPage";
 import AdminPanelPage from "../pages/AdminPanelPage";
+import PublicProfilePage from "../pages/PublicProfilePage";
+import CommunityRoutes from "../features/community/router/communityRoutes";
+import DashboardPage from "../pages/DashboardPage";
+import PrivateProfilePage from "../pages/PrivateProfile";
 
 export default function AppRouter() {
   const { token, user } = useSelector((state) => state.auth);
@@ -24,14 +28,16 @@ export default function AppRouter() {
 
       <Route element={<ProtectedRoute isAuthenticated={!!token} />}>
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/private-profile" element={<PrivateProfilePage />} />
         <Route path="/skills" element={<SkillPage />} />
         <Route path="/workshops" element={<WorkshopPage />} />
         <Route path="/messages" element={<MessagePage />} />
         <Route path="/feedback" element={<FeedbackPage />} />
-        <Route path="/community" element={<CommunityPage />} />
+        <Route path="/*" element={<CommunityRoutes />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/notifications" element={<NotificationPage />} />
       </Route>
-
+      <Route path="/public-profile" element={<PublicProfilePage />} />
       <Route
         path="/admin"
         element={<ProtectedRoute isAuthenticated={!!token && user?.is_admin} />}

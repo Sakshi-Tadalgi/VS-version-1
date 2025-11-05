@@ -9,6 +9,7 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileEditor() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function ProfileEditor() {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -65,6 +67,10 @@ export default function ProfileEditor() {
     }
 
     dispatch(updateProfile(formData));
+  };
+
+  const handleAddSkill = () => {
+    navigate("/skills");
   };
 
   return (
@@ -113,9 +119,15 @@ export default function ProfileEditor() {
           />
         )}
 
-        <Button variant="contained" onClick={handleSubmit}>
-          Save Changes
-        </Button>
+        <Stack direction="row" spacing={2}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Save Changes
+          </Button>
+
+          <Button variant="outlined" color="secondary" onClick={handleAddSkill}>
+            Add Skills
+          </Button>
+        </Stack>
       </Stack>
     </Box>
   );

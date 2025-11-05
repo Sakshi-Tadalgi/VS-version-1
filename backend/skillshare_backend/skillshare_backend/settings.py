@@ -50,15 +50,21 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'skillshare_backend.urls'
 WSGI_APPLICATION = 'skillshare_backend.wsgi.application'
 ASGI_APPLICATION = 'skillshare_backend.asgi.application'
+CORS_ALLOW_ALL_ORIGINS = True
 
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'authorization',
+    'content-type',
+]
+
+CORS_EXPOSE_HEADERS = ['Content-Type', 'Authorization']
+CORS_ALLOW_CREDENTIALS = True
 # -------------------------------
 # CORS Settings
 # -------------------------------
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'authorization',
-]
-CORS_ALLOW_CREDENTIALS = True
+
 
 # -------------------------------
 # Authentication and JWT Settings

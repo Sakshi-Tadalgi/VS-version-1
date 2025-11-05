@@ -1,27 +1,33 @@
-import { useState } from "react";
-import { Box, TextField, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Button, TextField, Box } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { sendMessage } from "../actions/chatActions";
 
-export default function MessageInput({ onSend }) {
-  const [content, setContent] = useState("");
+const MessageInput = ({ chatId }) => {
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
-  const handleSend = () => {
-    if (content.trim()) {
-      onSend(content);
-      setContent("");
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      dispatch(sendMessage({ chatId, content: message }));
+      setMessage("");
     }
   };
 
   return (
-    <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+    <Box sx={{ display: "flex", gap: 2 }}>
       <TextField
         fullWidth
-        label="Type a message"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        label="Type your message"
+        variant="outlined"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       />
-      <Button variant="contained" onClick={handleSend}>
+      <Button variant="contained" onClick={handleSendMessage}>
         Send
       </Button>
     </Box>
   );
-}
+};
+
+export default MessageInput;

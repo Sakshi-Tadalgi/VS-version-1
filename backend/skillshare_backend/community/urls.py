@@ -1,8 +1,18 @@
 from django.urls import path
-from .views import ExploreUsersView, FollowUserView, UnfollowUserView
+from . import views
+from .views import list_users, follow_unfollow_user, profile_view
+
+from .models import Follow
 
 urlpatterns = [
-    path('explore/', ExploreUsersView.as_view(), name='explore_users'),
-    path('follow/', FollowUserView.as_view(), name='follow_user'),
-    path('unfollow/<int:following_id>/', UnfollowUserView.as_view(), name='unfollow_user'),
+    path('explore/', list_users, name='explore-users'),
+    path('follow/<int:user_id>/', follow_unfollow_user, name='follow-unfollow'),
+    path('profile/', profile_view, name='profile'),
+
+    path('profile/<int:user_id>/', views.public_profile_view, name='public-profile'),
+
+
+
 ]
+
+

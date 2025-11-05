@@ -5,10 +5,17 @@ from .models import Follow
 
 class UserExploreSerializer(serializers.ModelSerializer):
     skills = serializers.StringRelatedField(many=True)
+    is_following = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'bio', 'expertise', 'skills']
+        fields = ['id', 'username', 'bio', 'expertise', 'skills', 'is_following']
+
+    def get_is_following(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return Follow.objects.filter(follower=request.user, following=obj).exists()
+        return False
 
 
 class FollowSerializer(serializers.ModelSerializer):
